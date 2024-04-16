@@ -1,0 +1,37 @@
+type User {
+    id:ID!
+    name:String!
+    email:String!
+    created_at:DateTime!
+    updated_at:DateTime
+    articles: [Article] @hasMany
+}
+
+extend type Query @guard(with: ["api"]) {
+    users (
+        email: String @where(operator: "like")
+        name: String @where(operator: "like")
+        created_at: DateTime
+        updated_at: DateTime
+        orderBy: _ @orderBy(columns: ["email", "name", "created_at", "updated_at"])
+    ): [User!]! @paginate(defaultCount: 5)
+}
+
+extend type Mutation @guard(with: ["api"]){
+    createUser(
+        name: String!
+        email: String!
+        password: String!
+    ): User! @create
+
+    updateUser(
+        id: ID!
+        name: String!
+        email: String!
+        password: String!
+    ): User @update
+
+    deleteUser(id: ID! @whereKey): User @delete
+}
+
+

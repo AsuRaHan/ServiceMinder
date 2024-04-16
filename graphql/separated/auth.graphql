@@ -1,0 +1,19 @@
+extend type Query {
+    "Get authorized user"
+    me: User! @auth @guard(with: ["api"])
+}
+
+extend type Mutation {
+    login(input: LoginInput @spread): AuthPayload!
+    logout: User @guard
+}
+
+type AuthPayload {
+    accessToken: String
+    user: User
+}
+
+input LoginInput {
+    email: String
+    password: String
+}

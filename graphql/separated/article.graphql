@@ -1,0 +1,15 @@
+type Article {
+    id: ID!
+    title: String!
+    content: String!
+    author: User @belongsTo
+}
+
+extend type Query {
+    articles(
+        title: String @where(operator: "like")
+        content: String @where(operator: "like")
+        created_at: DateTime
+        updated_at: DateTime
+    ): [Article!]! @paginate(defaultCount: 5)
+}
