@@ -28,7 +28,41 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+const queryUsers = gql`
+query users ($first: Int, $page: Int) {
+  users(first: $first, page: $page) {
+    data {
+      email
+      id
+      name
+    }
+    paginatorInfo {
+      total
+      count
+      currentPage
+      lastPage
+    }
+  }
+}
+`;
 export default {
-    // Логика компонента Vue здесь
+    data() {
+        return {
+            isError: false,
+        }
+    },
+    created() {
+        this.$apollo.query({
+            query: queryUsers,
+            variables: {
+                first: 5,
+                page: 1
+            }
+            }).then(data => {
+            const usersData = data.data.users;
+            console.log(usersData.data);
+        });
+    },
 }
 </script>

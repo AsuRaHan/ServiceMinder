@@ -24,6 +24,7 @@
 import {onLogout} from '../vue-apollo'
 
 import gql from "graphql-tag";
+
 const mutationLogout = gql`
     mutation logout {
       logout {
@@ -34,7 +35,7 @@ const mutationLogout = gql`
 export default {
     created() {
         // `this` указывает на экземпляр vm
-        // console.log('счётчик: ');
+        console.log('Navbar created user data',this.$store.state.user);
     },
     methods: {
         /**
@@ -49,12 +50,12 @@ export default {
                 console.log(userData);
                 // Call the `onLogout` function with the default Apollo client
                 onLogout(this.$apollo.provider.defaultClient)
-                    .then(() => {
-                        this.$store.state.user = {};
-                        this.$store.state.userToken = '';
-                        // Update the `isUserLogin` state to `false`
-                        this.$store.state.isUserLogin = false;
-                    });
+                .then(() => {
+                    this.$store.state.user = {};
+                    this.$store.state.userToken = '';
+                    // Update the `isUserLogin` state to `false`
+                    this.$store.state.isUserLogin = false;
+                });
             }).catch(error => {
                 console.log(error);
             });
