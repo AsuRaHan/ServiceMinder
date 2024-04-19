@@ -15,6 +15,8 @@ extend type Query @guard(with: ["api"]) {
         updated_at: DateTime
         orderBy: _ @orderBy(columns: ["email", "name", "created_at", "updated_at"])
     ): [User!]! @paginate(defaultCount: 5)
+
+    user(id: ID! @eq): User @find
 }
 
 extend type Mutation @guard(with: ["api"]){

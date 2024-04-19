@@ -1,3 +1,4 @@
+AddDefaultCharset utf-8
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews
@@ -9,10 +10,14 @@
     RewriteCond %{REQUEST_FILENAME} -f
     RewriteRule ^ ^$1 [N]
 
-    RewriteCond %{REQUEST_URI} (.w+$) [NC]
+    RewriteCond %{REQUEST_URI} (\.\w+$) [NC]
     RewriteRule ^(.*)$ public/$1
 
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^ public/index.php
+    RewriteRule ^ index.php
+
 </IfModule>
+
+
+

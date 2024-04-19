@@ -10,9 +10,9 @@ import { createApp } from 'vue';
 import adminApp from './app.vue';
 import router from './router';
 import store from './store';
-////////////////////////////////////////////////
+
 import { apolloProvider } from './vue-apollo'
-////////////////////////////////////////////////
+
 
 const vueApp = createApp(adminApp);
 vueApp.use(router);

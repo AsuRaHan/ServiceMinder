@@ -1,5 +1,6 @@
 <template>
     <login-form v-if="!isUserLogin"></login-form>
+
     <Navbar v-if="isUserLogin"></Navbar>
 
     <div v-if="isUserLogin" class="d-flex flex-wrap">
@@ -23,11 +24,17 @@
 import Sidebar from "@/components/Sidebar.vue";
 import Navbar from "@/components/Navbar.vue";
 import loginForm from "@/components/LoginForm.vue";
+import { getAuth } from './vue-apollo';
 export default {
     components: {
         Sidebar,
         Navbar,
         loginForm
+    },
+    created() {
+        if(getAuth()) {
+            this.$store.state.isUserLogin = true;
+        }
     },
     computed: {
         isUserLogin() {

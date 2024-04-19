@@ -94,10 +94,12 @@ export default {
                 }
             }).then(data => {
                 const userData = data.data.login;
-                console.log(userData.accessToken);
                 const apolloClient = this.$apollo.provider.defaultClient;
-                onLogin(apolloClient, userData.accessToken);
-                this.$store.state.isUserLogin = true;
+                onLogin(apolloClient, userData.accessToken).then(() => {
+                    this.$store.state.user = userData.user;
+                    this.$store.state.userToken = userData.accessToken;
+                    this.$store.state.isUserLogin = true;
+                });
             }).catch(error => {
                 this.isError = true;
                 this.errorMessage = error.message;

@@ -3,7 +3,9 @@ import { setContext } from '@apollo/client/link/context'
 
 // Name of the localStorage item
 const AUTH_TOKEN = 'apollo-token'
-
+export function getAuth () {
+    return localStorage.getItem(AUTH_TOKEN) || ''
+}
 const cache = new InMemoryCache()
 let link = new HttpLink({
     uri: '/graphql/',
