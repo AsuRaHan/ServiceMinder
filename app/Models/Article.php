@@ -15,9 +15,9 @@ class Article extends Model {
      *
      * @var array
      */
-    protected $fillable = [
-        'title', 'content',
-    ];
+//    protected $fillable = [
+//        'title', 'content',
+//    ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

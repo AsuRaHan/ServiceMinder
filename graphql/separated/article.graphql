@@ -1,15 +1,27 @@
 type Article {
     id: ID!
     title: String!
-    content: String!
-    author: User @belongsTo
+    preview: String
+    description: String
+    content: String
+    rating: Int
+    thumbnail: String
+    created_at: DateTime
+    updated_at: DateTime
+    author: User! @belongsTo
 }
 
 extend type Query {
     articles(
         title: String @where(operator: "like")
         content: String @where(operator: "like")
+        preview: String
+        description: String
+        rating: Int
+        thumbnail: String
         created_at: DateTime
         updated_at: DateTime
     ): [Article!]! @paginate(defaultCount: 5)
+
+    LatestArticle: Article!
 }

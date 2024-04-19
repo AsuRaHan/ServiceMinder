@@ -33,5 +33,11 @@ extend type Mutation @guard(with: ["api"]){
 
     deleteUser(id: ID! @whereKey): User @delete
 }
-
+extend type Mutation{
+    signIn(
+        name: String! @rules(apply: ["required", "min:4"])
+        email: String! @rules(apply: ["required", "email", "unique:users"])
+        password: String! @rules(apply: ["required", "min:4"])
+    ): User! @create
+}
 

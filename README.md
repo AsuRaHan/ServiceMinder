@@ -7,7 +7,7 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-# UAZ ServiceMinder MSP
+# ServiceMinder
 
 ### Efficient Maintenance Management Made Easy
 
@@ -22,7 +22,11 @@
 
 `php artisan migrate` - Запустить миграции
 
-`php artisan db:seed` - Заполнить БД тестовыми данными
+`php artisan db:seed` - Заполнить БД тестовыми данными (если это необходимо)
+
+`npm run dev` - Запустить VITE для разработки фронтэнд части
+
+`npm run build` - Собрать фронтэнд часть
 
 ## Основные команды Artisan Laravel
 
@@ -62,6 +66,22 @@
 
 `php artisan migrate:rollback`
 
+### Команды относятся для lighthouse
+
+`php artisan lighthouse:query LatestPost` - Создает запрос
+
+# Некоторые подсказки по разработки
+
+В заголовок запроса надо включить авторизацию
+
+```
+{
+"Authorization": "Bearer VJCz1DCpmdvB9WatqvWbXBP2RN8geZQlrQatUnWIBJCdbAyTl3UsdOuio3VE"
+}
+```
+
+
+***
 ## About Laravel
 
 Laravel - это веб-фреймворк с экспрессивным и элегантным синтаксисом. Мы считаем, что разработка должна быть приятным и творческим процессом, чтобы быть по-настоящему удовлетворительной. Laravel упрощает разработку, облегчая обычные задачи, используемые во многих веб-проектах.
@@ -84,10 +104,10 @@ Laravel имеет самую обширную и подробную [докум
 
 Если вам не хочется читать, [Laracasts](https://laracasts.com) вам может помочь. Laracasts содержит тысячи видеоуроков по различным темам, включая Laravel, современный PHP, юнит-тестирование и JavaScript. Развивайте свои навыки, изучая наш обширный видеоархив.
 
-### Разработчики этого приложения
+## Разработчики этого приложения
 
 - **[Иван Колотилкин](https://rrdev.ru/)**
 
-## Лицензия
+### Лицензия
 
 Фреймворк Laravel — это программное обеспечение с открытым исходным кодом, лицензированное под лицензией [MIT license](https://opensource.org/licenses/MIT).

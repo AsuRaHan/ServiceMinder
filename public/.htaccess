@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
 Options -MultiViews -Indexes
- 
+
 RewriteEngine On
 
 # Handle Authorization Header
@@ -23,3 +23,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/public/
 RewriteRule ^(css|js|images)/(.*)$ public/$1/$2 [L,NC]
 </IfModule>
+

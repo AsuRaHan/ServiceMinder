@@ -8,3 +8,14 @@
 @import 'bootstrap/scss/bootstrap';
 // Added: Bootstrap icons
 @import 'bootstrap-icons/font/bootstrap-icons.css';
+
+body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    min-height: 100vh;
+}

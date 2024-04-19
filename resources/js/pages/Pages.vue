@@ -1,5 +1,5 @@
 <template>
-    <h2>About Page</h2>
+    <h2>Page rrr</h2>
 
     <div class="table-responsive small">
         <table class="table table-striped table-sm">

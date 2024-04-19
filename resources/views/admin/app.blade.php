@@ -7,6 +7,7 @@
     <title>SM Admin</title>
     <!-- Scripts -->
     @vite('resources/sass/app.scss')
+{{--    @vite('resources/css/style.css')--}}
 </head>
 <body>
     <div id="app"></div>
