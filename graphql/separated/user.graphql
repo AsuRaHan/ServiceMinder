@@ -6,18 +6,49 @@ type User {
     updated_at:DateTime
     articles: [Article] @hasMany
 }
-#@guard(with: ["api"])
+
+enum QueryUsersOrderByColumn {
+    ID
+    EMAIL
+    NAME
+    CREATED_AT
+    UPDATED_AT
+}
+
+input QueryUsersOrderByOrderByClause {
+    column: QueryUsersOrderByColumn!
+    order: SortOrder!
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}
+
 extend type Query {
     users (
         email: String @where(operator: "like")
         name: String @where(operator: "like")
         created_at: DateTime
         updated_at: DateTime
-        orderBy: _ @orderBy(columns: ["id","email", "name", "created_at", "updated_at"])
+        orderBy: [QueryUsersOrderByOrderByClause!] @orderBy(columns: ["id", "email", "name", "created_at", "updated_at"])
     ): [User!]! @paginate(defaultCount: 5)
 
     user(id: ID! @eq): User @find
 }
+
+#@guard(with: ["api"])
+#extend type Query {
+#    users (
+#        email: String @where(operator: "like")
+#        name: String @where(operator: "like")
+#        created_at: DateTime
+#        updated_at: DateTime
+#        orderBy: _ @orderBy(columns: ["id","email", "name", "created_at", "updated_at"])
+#    ): [User!]! @paginate(defaultCount: 5)
+#
+#    user(id: ID! @eq): User @find
+#}
 
 extend type Mutation @guard(with: ["api"]){
     createUser(

@@ -1,13 +1,24 @@
 <template>
     <h2>Список пользователей</h2>
 
+    <div class="search-bar">
+        <input type="text" v-model="searchName" placeholder="Search by name" @input="fetchUsers" />
+        <input type="text" v-model="searchEmail" placeholder="Search by email" @input="fetchUsers" />
+    </div>
+
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col" @click="sort('id')">ID</th>
-                <th scope="col" @click="sort('name')">Name</th>
-                <th scope="col" @click="sort('email')">E-mail</th>
+                <th scope="col" @click="sort('ID')">
+                    ID <span v-if="sortBy === 'ID'">{{ sortDesc ? '↓' : '↑' }}</span>
+                </th>
+                <th scope="col" @click="sort('NAME')">
+                    Name <span v-if="sortBy === 'NAME'">{{ sortDesc ? '↓' : '↑' }}</span>
+                </th>
+                <th scope="col" @click="sort('EMAIL')">
+                    E-mail <span v-if="sortBy === 'EMAIL'">{{ sortDesc ? '↓' : '↑' }}</span>
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -23,6 +34,7 @@
     <paginator :totalPages="totalPages" :currentPage="currentPage" @page-changed="changePage" />
 </template>
 
+
 <script>
 import gql from 'graphql-tag'
 import Paginator from '@/components/Paginator.vue'
@@ -31,8 +43,11 @@ const queryUsers = gql`
 query users(
   $first: Int,
   $page: Int,
+  $orderBy: [QueryUsersOrderByOrderByClause!],
+  $name: String,
+  $email: String
 ) {
-  users(first: $first, page: $page) {
+  users(first: $first, page: $page, orderBy: $orderBy, name: $name, email: $email) {
     data {
       email
       id
@@ -65,25 +80,12 @@ export default {
             totalPages: 0,
             sortBy: null,
             sortDesc: false,
+            searchName: '',
+            searchEmail: '',
         }
     },
     created() {
         this.fetchUsers();
-    },
-    computed: {
-        sortedUsers() {
-            if (this.sortBy) {
-                return this.usersList.slice().sort((a, b) => {
-                    if (this.sortDesc) {
-                        return b[this.sortBy] < a[this.sortBy] ? -1 : 1;
-                    } else {
-                        return a[this.sortBy] < b[this.sortBy] ? -1 : 1;
-                    }
-                });
-            } else {
-                return this.usersList;
-            }
-        }
     },
     methods: {
         fetchUsers() {
@@ -92,15 +94,18 @@ export default {
                 variables: {
                     first: this.itemsPerPage,
                     page: this.currentPage,
-                    orderBy: this.sortBy ? [{ column: this.sortBy, order: this.sortDesc ? 'DESC' : 'ASC' }] : undefined,
-                    sortBy: this.sortBy,
-                    sortDesc: this.sortDesc
+                    orderBy: this.sortBy ? [{ column: this.sortBy, order: this.sortDesc ? 'DESC' : 'ASC' }] : [],
+                    name: this.searchName ? `%${this.searchName}%` : undefined,
+                    email: this.searchEmail ? `%${this.searchEmail}%` : undefined,
                 }
             }).then(data => {
                 const usersData = data.data.users;
                 this.usersList = usersData.data;
                 this.totalUsers = usersData.paginatorInfo.total;
                 this.totalPages = Math.ceil(this.totalUsers / this.itemsPerPage); // Вычисляем общее количество страниц
+            }).catch(error => {
+                console.error('Error fetching users:', error);
+                this.isError = true;
             });
         },
         changePage(page) {
@@ -119,3 +124,4 @@ export default {
     },
 }
 </script>
+
